@@ -25,7 +25,6 @@ import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
-import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 
@@ -55,8 +54,6 @@ public class MonitorNotificationWebSocketHandler implements WebSocketHandler {
     private final ObjectMapper jacksonObjectMapper;
 
     private final int heartbeatInterval;
-
-    private final Map<String, Integer> userConnections = new ConcurrentHashMap<>();
 
     public MonitorNotificationWebSocketHandler(ObjectMapper jacksonObjectMapper, @Value("${notification.websocket.heartbeat.interval:30}") int heartbeatInterval) {
         this.jacksonObjectMapper = jacksonObjectMapper;
