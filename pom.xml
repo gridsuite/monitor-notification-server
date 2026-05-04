@@ -34,21 +34,15 @@
 
     <developers>
         <developer>
-            <name>Chamseddine Benhamed</name>
-            <email>chamseddine.benhamed@rte-france.com</email>
-            <organization>RTE</organization>
-            <organizationUrl>http://www.rte-france.com</organizationUrl>
-        </developer>
-        <developer>
-            <name>Jon Harper</name>
-            <email>jon.harper@rte-france.com</email>
+            <name>Kevin Le Saulnier</name>
+            <email>kevin.le-saulnier@rte-france.com</email>
             <organization>RTE</organization>
             <organizationUrl>http://www.rte-france.com</organizationUrl>
         </developer>
     </developers>
 
     <properties>
-        <gridsuite-dependencies.version>50.0.0</gridsuite-dependencies.version>
+        <gridsuite-dependencies.version>50.1.0</gridsuite-dependencies.version>
         <sonar.organization>gridsuite</sonar.organization>
         <sonar.projectKey>org.gridsuite:monitor-notification-server</sonar.projectKey>
     </properties>

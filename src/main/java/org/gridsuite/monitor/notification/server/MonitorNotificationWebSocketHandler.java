@@ -29,8 +29,6 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.function.Consumer;
 import java.util.logging.Level;
 
-import static java.util.stream.Collectors.toList;
-
 /**
  * A WebSocketHandler that sends messages from a broker to websockets opened by clients, interleaving with pings to keep connections open.
  * <p>
@@ -51,9 +49,8 @@ public class MonitorNotificationWebSocketHandler implements WebSocketHandler {
     static final String HEADER_UPDATE_TYPE = "updateType";
     static final String HEADER_TIMESTAMP = "timestamp";
     static final String HEADER_ERROR = "error";
-
-    static final String USERS_METER_NAME = "app.users";
-    static final String USER_TAG = "user";
+    static final String HEADER_PROCESS_TYPE = "processType";
+    static final String HEADER_PROCESS_EXECUTION_ID = "processExecutionId";
 
     private final ObjectMapper jacksonObjectMapper;
 
@@ -100,8 +97,8 @@ public class MonitorNotificationWebSocketHandler implements WebSocketHandler {
         var resHeader = new HashMap<String, Object>();
         resHeader.put(HEADER_TIMESTAMP, messageHeader.get(HEADER_TIMESTAMP));
         resHeader.put(HEADER_UPDATE_TYPE, messageHeader.get(HEADER_UPDATE_TYPE));
-        resHeader.put("processType", messageHeader.get("processType"));
-        resHeader.put("processExecutionId", messageHeader.get("processExecutionId"));
+        resHeader.put(HEADER_PROCESS_TYPE, messageHeader.get(HEADER_PROCESS_TYPE));
+        resHeader.put(HEADER_PROCESS_EXECUTION_ID, messageHeader.get(HEADER_PROCESS_EXECUTION_ID));
 
         passHeader(messageHeader, resHeader, HEADER_ERROR);
         passHeader(messageHeader, resHeader, HEADER_USER_ID); // to filter the display of error messages in the front end
@@ -138,20 +135,6 @@ public class MonitorNotificationWebSocketHandler implements WebSocketHandler {
     public Mono<Void> handle(WebSocketSession webSocketSession) {
         return webSocketSession
                 .send(notificationFlux(webSocketSession).mergeWith(heartbeatFlux(webSocketSession)))
-                .and(receive(webSocketSession))
-                .doFirst(() -> updateConnectionMetrics(webSocketSession))
-                .doFinally(s -> updateDisconnectionMetrics(webSocketSession));
-    }
-
-    private void updateConnectionMetrics(WebSocketSession webSocketSession) {
-        var userId = webSocketSession.getHandshakeInfo().getHeaders().getFirst(HEADER_USER_ID);
-        LOGGER.info("New websocket connection id={} for user={}", webSocketSession.getId(), userId);
-        userConnections.compute(userId, (k, v) -> (v == null) ? 1 : v + 1);
-    }
-
-    private void updateDisconnectionMetrics(WebSocketSession webSocketSession) {
-        var userId = webSocketSession.getHandshakeInfo().getHeaders().getFirst(HEADER_USER_ID);
-        LOGGER.info("Websocket disconnection id={} for user={}", webSocketSession.getId(), userId);
-        userConnections.computeIfPresent(userId, (k, v) -> v > 1 ? v - 1 : null);
+                .and(receive(webSocketSession));
     }
 }
