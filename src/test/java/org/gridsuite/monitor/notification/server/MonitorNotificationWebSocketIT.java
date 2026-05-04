@@ -6,9 +6,7 @@
  */
 package org.gridsuite.monitor.notification.server;
 
-import io.micrometer.core.instrument.MeterRegistry;
 import org.junit.jupiter.api.Test;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
 import org.springframework.http.HttpHeaders;
@@ -30,9 +28,6 @@ class MonitorNotificationWebSocketIT {
 
     @LocalServerPort
     private String port;
-
-    @Autowired
-    private MeterRegistry meterRegistry;
 
     @Test
     void echo() {
