@@ -38,6 +38,6 @@
     <!--
         our logs
     -->
-    <logger name="org.gridsuite.study.notification.server" level="DEBUG"/>
+    <logger name="org.gridsuite.monitor.notification.server" level="DEBUG"/>
 
 </configuration>
