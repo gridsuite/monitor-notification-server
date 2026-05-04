@@ -8,7 +8,7 @@ spring:
     stream:
       bindings:
         consumeNotification-in-0:
-          destination: ${powsybl-ws.rabbitmq.destination.prefix:}monitor.update.front
+          destination: ${powsybl-ws.rabbitmq.destination.prefix:}monitor.update
 powsybl-ws:
   autoconfigure:
     base-exception-handler:
