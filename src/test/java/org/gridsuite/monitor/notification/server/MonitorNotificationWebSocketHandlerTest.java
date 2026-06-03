@@ -9,6 +9,7 @@ package org.gridsuite.monitor.notification.server;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
+import org.mockito.ArgumentCaptor;
 import org.springframework.core.io.buffer.DataBuffer;
 import org.springframework.core.io.buffer.DataBufferFactory;
 import org.springframework.core.io.buffer.DefaultDataBufferFactory;
@@ -16,12 +17,10 @@ import org.springframework.messaging.Message;
 import org.springframework.messaging.support.GenericMessage;
 import org.springframework.web.reactive.socket.WebSocketMessage;
 import org.springframework.web.reactive.socket.WebSocketSession;
-import org.mockito.ArgumentCaptor;
 import reactor.core.Disposable;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.FluxSink;
 import reactor.core.publisher.Mono;
-
 import java.nio.charset.StandardCharsets;
 import java.time.Duration;
 import java.util.ArrayList;
@@ -29,7 +28,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
-
 import static org.gridsuite.monitor.notification.server.MonitorNotificationWebSocketHandler.HEADER_ERROR;
 import static org.gridsuite.monitor.notification.server.MonitorNotificationWebSocketHandler.HEADER_PROCESS_EXECUTION_ID;
 import static org.gridsuite.monitor.notification.server.MonitorNotificationWebSocketHandler.HEADER_PROCESS_TYPE;
