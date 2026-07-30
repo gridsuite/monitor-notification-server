@@ -94,9 +94,7 @@ public class MonitorNotificationWebSocketHandler implements WebSocketHandler {
         var resHeader = new HashMap<String, Object>();
         resHeader.put(HEADER_TIMESTAMP, messageHeader.get(HEADER_TIMESTAMP));
         resHeader.put(HEADER_UPDATE_TYPE, messageHeader.get(HEADER_UPDATE_TYPE));
-        if (messageHeader.get(HEADER_PROCESS_TYPE) != null) {
-            resHeader.put(HEADER_PROCESS_TYPE, messageHeader.get(HEADER_PROCESS_TYPE));
-        }
+        resHeader.put(HEADER_PROCESS_TYPE, messageHeader.get(HEADER_PROCESS_TYPE));
         resHeader.put(HEADER_PROCESS_EXECUTION_ID, messageHeader.get(HEADER_PROCESS_EXECUTION_ID));
 
         passHeader(messageHeader, resHeader, HEADER_ERROR);
