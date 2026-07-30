@@ -14,6 +14,22 @@ Monitor Notification Server is the GridMonitor notification service. It consumes
 - Forward the update payload and selected message headers needed by the frontend.
 - Send periodic WebSocket ping frames to keep client connections alive.
 
+## Technical Stack
+
+- Spring Boot (WebFlux, Actuator, Cloud Stream)
+- RabbitMQ via Spring Cloud Stream
+- WebSocket
+
+## Development Scripts
+
+Build Docker image
+
+```shell
+mvn install -DskipTests -Dpowsybl.docker.install
+```
+
+Please read [liquibase usage](https://github.com/powsybl/powsybl-parent/#liquibase-usage) for instructions to automatically generate changesets. After you generated a changeset do not forget to add it to git and in src/resource/db/changelog/db.changelog-master.yml
+
 ## WebSocket API
 
 The service exposes one WebSocket endpoint:
