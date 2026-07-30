@@ -4,6 +4,7 @@
 [![Coverage Status](https://sonarcloud.io/api/project_badges/measure?project=org.gridsuite%3Amonitor-notification-server&metric=coverage)](https://sonarcloud.io/component_measures?id=org.gridsuite%3Amonitor-notification-server&metric=coverage)
 [![MPL-2.0 License](https://img.shields.io/badge/license-MPL_2.0-blue.svg)](https://www.mozilla.org/en-US/MPL/2.0/)
 
+## Description
 Monitor Notification Server is the GridMonitor notification service. It consumes process execution updates from RabbitMQ and exposes them to GridMonitor clients through a WebSocket endpoint.
 
 ## Functional Scope
