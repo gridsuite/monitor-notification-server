@@ -28,8 +28,6 @@ Build Docker image
 mvn install -DskipTests -Dpowsybl.docker.install
 ```
 
-Please read [liquibase usage](https://github.com/powsybl/powsybl-parent/#liquibase-usage) for instructions to automatically generate changesets. After you generated a changeset do not forget to add it to git and in src/resource/db/changelog/db.changelog-master.yml
-
 ## WebSocket API
 
 The service exposes one WebSocket endpoint:
