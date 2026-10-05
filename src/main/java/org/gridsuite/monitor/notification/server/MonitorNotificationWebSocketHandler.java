@@ -8,8 +8,6 @@ package org.gridsuite.monitor.notification.server;
 
 import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.messaging.Message;
@@ -41,7 +39,6 @@ import java.util.logging.Level;
 @Component
 public class MonitorNotificationWebSocketHandler implements WebSocketHandler {
 
-    private static final Logger LOGGER = LoggerFactory.getLogger(MonitorNotificationWebSocketHandler.class);
     private static final String CATEGORY_BROKER_INPUT = MonitorNotificationWebSocketHandler.class.getName() + ".messages.input-broker";
     private static final String CATEGORY_WS_OUTPUT = MonitorNotificationWebSocketHandler.class.getName() + ".messages.output-websocket";
     static final String HEADER_USER_ID = "userId";
@@ -117,21 +114,10 @@ public class MonitorNotificationWebSocketHandler implements WebSocketHandler {
                 .pingMessage(dbf -> dbf.wrap((webSocketSession.getId() + "-" + n).getBytes(StandardCharsets.UTF_8))));
     }
 
-    public Flux<WebSocketMessage> receive(WebSocketSession webSocketSession) {
-        return webSocketSession.receive()
-                .doOnNext(webSocketMessage -> {
-                    //if it's not the heartbeat
-                    if (webSocketMessage.getType().equals(WebSocketMessage.Type.TEXT)) {
-                        String wsPayload = webSocketMessage.getPayloadAsText();
-                        LOGGER.debug("Message received : {} by session {}", wsPayload, webSocketSession.getId());
-                    }
-                });
-    }
-
     @Override
     public Mono<Void> handle(WebSocketSession webSocketSession) {
         return webSocketSession
                 .send(notificationFlux(webSocketSession).mergeWith(heartbeatFlux(webSocketSession)))
-                .and(receive(webSocketSession));
+                .and(webSocketSession.receive());
     }
 }
