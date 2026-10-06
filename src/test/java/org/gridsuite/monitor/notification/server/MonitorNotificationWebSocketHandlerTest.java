@@ -122,15 +122,15 @@ class MonitorNotificationWebSocketHandlerTest {
     }
 
     @Test
-    void testReceiveShouldReturnIncomingMessages() {
+    void testHandleShouldConsumeIncomingMessages() {
         WebSocketMessage textMessage = new WebSocketMessage(WebSocketMessage.Type.TEXT, dataBufferFactory.wrap("hello".getBytes(StandardCharsets.UTF_8)));
         WebSocketMessage binaryMessage = new WebSocketMessage(WebSocketMessage.Type.BINARY, dataBufferFactory.wrap(new byte[] {1, 2, 3}));
-        when(webSocketSession.receive()).thenReturn(Flux.just(textMessage, binaryMessage));
+        List<WebSocketMessage> receivedMessages = new ArrayList<>();
+        when(webSocketSession.receive()).thenReturn(Flux.just(textMessage, binaryMessage).doOnNext(receivedMessages::add));
 
-        List<WebSocketMessage> receivedMessages = new MonitorNotificationWebSocketHandler(objectMapper, Integer.MAX_VALUE)
-            .receive(webSocketSession)
-            .collectList()
-            .block(Duration.ofSeconds(1));
+        MonitorNotificationWebSocketHandler handler = new MonitorNotificationWebSocketHandler(objectMapper, Integer.MAX_VALUE);
+        handler.consumeNotification().accept(Flux.empty());
+        handler.handle(webSocketSession).block(Duration.ofSeconds(1));
 
         assertEquals(2, receivedMessages.size());
         assertSame(textMessage, receivedMessages.get(0));
