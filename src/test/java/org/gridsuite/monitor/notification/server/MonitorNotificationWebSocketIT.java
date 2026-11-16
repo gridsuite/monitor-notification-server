@@ -6,9 +6,11 @@
  */
 package org.gridsuite.monitor.notification.server;
 
+import com.powsybl.ws.commons.security.AllowAllAuthorizationTestConfiguration;
 import org.junit.jupiter.api.Test;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.web.server.LocalServerPort;
+import org.springframework.context.annotation.Import;
 import org.springframework.http.HttpHeaders;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.web.reactive.socket.client.StandardWebSocketClient;
@@ -17,12 +19,13 @@ import reactor.core.publisher.Mono;
 
 import java.net.URI;
 
-import static org.gridsuite.monitor.notification.server.MonitorNotificationWebSocketHandler.*;
+import static com.powsybl.ws.commons.security.AuthorizationSystemConstants.HEADER_USER_ID;
 
 /**
  * @author Jon Harper <jon.harper at rte-france.com>
  */
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT, classes = {MonitorNotificationApplication.class})
+@Import(AllowAllAuthorizationTestConfiguration.class)
 @DirtiesContext
 class MonitorNotificationWebSocketIT {
 
