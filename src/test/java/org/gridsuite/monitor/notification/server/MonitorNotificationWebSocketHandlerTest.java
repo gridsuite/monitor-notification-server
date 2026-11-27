@@ -28,11 +28,12 @@ import java.util.List;
 import java.util.Map;
 import java.util.concurrent.atomic.AtomicReference;
 import java.util.function.Function;
+
+import static com.powsybl.ws.commons.security.AuthorizationSystemConstants.HEADER_USER_ID;
 import static org.gridsuite.monitor.notification.server.MonitorNotificationWebSocketHandler.HEADER_ERROR;
 import static org.gridsuite.monitor.notification.server.MonitorNotificationWebSocketHandler.HEADER_PROCESS_EXECUTION_ID;
 import static org.gridsuite.monitor.notification.server.MonitorNotificationWebSocketHandler.HEADER_PROCESS_TYPE;
 import static org.gridsuite.monitor.notification.server.MonitorNotificationWebSocketHandler.HEADER_UPDATE_TYPE;
-import static org.gridsuite.monitor.notification.server.MonitorNotificationWebSocketHandler.HEADER_USER_ID;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
 import static org.junit.jupiter.api.Assertions.assertInstanceOf;
